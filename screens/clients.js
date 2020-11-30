@@ -4,23 +4,47 @@ import {
     Text,
     StyleSheet,
     TextInput,
-    TouchableOpacity,
+    TouchableOpacity, Button,
     Dimensions, ScrollView
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import firebase from '../config/firebase';
 
 const client = (props) => {
+    const [position, setPosition] = useState({
+        lat: 0,
+        lng: 0,
+    });
+    const [m, setM] = useState({
+        lat: 0,
+        lng: 0,
+    });
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            setPosition({ lat, lng });
+        },
+        (error) => {
+            console.log(error.message);
+        },
+        {}
+    );
+
     const [fname, setFname] = useState('');
     const [lname, setLname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [position, setPosition] = useState('');
-    const [salary, setSalary] = useState('');
-    const [nid, setNid] = useState('');
+    const role = 'Client';
+    const [address, setAddress] = useState('');
+    const [company, setCompany] = useState('');
+    state = {
+        // markers: []        Change this
+        marker: null          // to this
+    }
     const initialLocation = {
-        latitude: -20.106302,
-        longitude: 57.580937,
+        latitude: -20.136302,
+        longitude: 57.500937,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     };
@@ -37,12 +61,16 @@ const client = (props) => {
                 })
 
                 const empObj = {
-                    fname,
-                    lname,
-                    nid,
-                    email,
-                    position,
+                    data: {
+                        fname,
+                        lname,
+                        company,
+                        email,
+                        address,
+                        role,
 
+                    },
+                    coords: m
                 };
                 empRef
                     .doc(uid)
@@ -94,40 +122,42 @@ const client = (props) => {
 
                 <TextInput
                     style={styles.input}
-                    placeholder={'NID'}
-                    value={nid}
-                    onChangeText={(nid) => setNid(nid)}
+                    placeholder={'Company Name'}
+                    value={company}
+                    onChangeText={(company) => setCompany(company)}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder={'Position'}
-                    value={position}
-                    onChangeText={(position) => setPosition(position)}
+                    placeholder={'Address'}
+                    value={address}
+                    onChangeText={(address) => setAddress(address)}
                 />
 
 
                 <View style={styles.container}>
-                    <MapView style={styles.map} initialRegion={initialLocation}>
-                        <Marker
-                            coordinate={initialLocation}
-                            title={'Pamplemousses Garden'}
-                            description={'This is popular relaxation place for UdM students'}
-                        />
-                        <Marker
-                            coordinate={{
-                                latitude: -20.102207,
-                                longitude: 57.573283,
+                    <MapView style={styles.map} initialRegion={initialLocation}
+                        onPress={(e) => {
+                            const lat = e.nativeEvent.coordinate.latitude;
+                            const lng = e.nativeEvent.coordinate.longitude;
+                            setM({ lat, lng })
+                        }}>
+                        {
+                            m &&
+                            <MapView.Marker coordinate={{
+                                latitude: m.lat,
+                                longitude: m.lng,
                                 latitudeDelta: 0.0922,
                                 longitudeDelta: 0.0421,
-                            }}
-                            title={'UdM Dwami Dayanand Campus'}
-                            description={'The No 1 University in Mauritius'}
-                        />
+                            }} />
+                        }
+
                     </MapView>
                 </View>
+
                 <TouchableOpacity style={styles.button} onPress={signupUser}>
                     <Text style={styles.buttonText}>Add Client</Text>
                 </TouchableOpacity>
+
             </ScrollView>
         </View>
     );

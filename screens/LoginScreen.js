@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 import firebase from '../config/firebase';
-
+global.role = "Admin"
 const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,11 +25,11 @@ const LoginScreen = (props) => {
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
         console.log('User logged in');
-        console.log(user);
+        // console.log(user);
         props.navigation.navigate('menu');
       })
       .catch((error) => {
-        alert(email)
+
         console.log(error.message);
       });
   };
@@ -41,7 +41,7 @@ const LoginScreen = (props) => {
           source={require('../assets/login.png')}
           resizeMode="center"
           style={styles.image} />
-        <Text style={styles.textTitle}>Welcome back</Text>
+        <Text style={styles.textTitle}>Welcome</Text>
         <Text style={styles.textBody}>Log in to your existant account</Text>
         <View style={{ marginTop: 20 }} />
 

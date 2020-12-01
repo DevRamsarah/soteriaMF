@@ -15,13 +15,73 @@ import AboutScreen from '../screens/AboutScreen';
 import FavouritesScreen from '../screens/FavouritesScreen';
 import Mission from '../screens/mission';
 import employee from '../screens/employee';
-
+import request from '../screens/request';
+import firebase from '../config/firebase';
+const tab = "TabsNavigatorAdmin" + global.role
+// const user = firebase.firestore()
+//   .collection('employees').doc(uid).get()
+// console.log(user)
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tabs = createBottomTabNavigator();
 
 const AppNavigator = () => {
-  const TabsNavigator = () => {
+  const TabsNavigatorAdmin = () => {
+    return (
+      <Tabs.Navigator
+        tabBarOptions={{
+          activeTintColor: 'tomato',
+        }}
+      >
+        <Tabs.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="home" color={color} size={size} />
+            ),
+          }}
+          name={'Home'}
+          component={Home}
+        />
+
+        <Tabs.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name="add-user" color={color} size={size} />
+            ),
+
+
+          }}
+          // name={'employee'}
+          // component={SignupScreen}
+          name={'employeees'}
+          component={employee}
+        />
+        <Tabs.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="add-circle" color={color} size={size} />
+            ),
+          }}
+          name={'Clients'}
+          component={AboutScreen}
+        // name={'client'}
+        // component={clients}
+        />
+        <Tabs.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="face-profile" color={color} size={size} />
+            ),
+          }}
+          name={'Profile'}
+          component={ProfileScreen}
+
+        />
+
+      </Tabs.Navigator>
+    );
+  };
+  const TabsNavigatorEmployee = () => {
     return (
       <Tabs.Navigator
         tabBarOptions={{
@@ -46,28 +106,8 @@ const AppNavigator = () => {
           name={'calendar'}
           component={FavouritesScreen}
         />
-        <Tabs.Screen
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Entypo name="add-user" color={color} size={size} />
-            ),
-          }}
-          // name={'employee'}
-          // component={SignupScreen}
-          name={'employeees'}
-          component={employee}
-        />
-        <Tabs.Screen
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="add-circle" color={color} size={size} />
-            ),
-          }}
-          name={'About'}
-          component={AboutScreen}
-        // name={'client'}
-        // component={clients}
-        />
+
+
         <Tabs.Screen
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -78,17 +118,61 @@ const AppNavigator = () => {
           component={ProfileScreen}
 
         />
-
       </Tabs.Navigator>
     );
   };
+  const TabsNavigatorClient = () => {
+    return (
+      <Tabs.Navigator
+        tabBarOptions={{
+          activeTintColor: 'tomato',
+        }}
+      >
+        <Tabs.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="home" color={color} size={size} />
+            ),
+          }}
+          name={'Home'}
+          component={Home}
+        />
+
+
+
+        <Tabs.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="face-profile" color={color} size={size} />
+            ),
+          }}
+          name={'Profile'}
+          component={ProfileScreen}
+
+        />
+        <Tabs.Screen
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="face-profile" color={color} size={size} />
+            ),
+          }}
+          name={'request'}
+          component={request}
+
+        />
+      </Tabs.Navigator>
+    );
+  };
+
+
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name={'Login'} component={LoginScreen} />
+        <Stack.Screen name={'request'} component={request} />
         <Stack.Screen name={'Home'} component={Home} />
-        <Stack.Screen name={'menu'} component={TabsNavigator} />
+        <Stack.Screen name={'menu'} component={(global.role == "Admin" || global.role == "Client") ? (global.role == "Admin") ? TabsNavigatorAdmin : TabsNavigatorClient : TabsNavigatorEmployee} />
         <Stack.Screen name={'About'} component={AboutScreen} />
         <Stack.Screen name={'Employees'} component={employee} />
         <Stack.Screen name={'client'} component={clients} />

@@ -1,49 +1,74 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Scroll from './scroll';
 import Support from './support';
+import MapView, { Marker } from 'react-native-maps';
+const Mission = (props) => {
 
-export default class Mission extends React.Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={{ width: '100%', height: '120%' }}>
-                    <View style={styles.header}>
+
+
+    const initialLocation = {
+        latitude: -20.136302,
+        longitude: 57.500937,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+    };
+    return (
+        <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={{ width: '100%', height: '120%' }}>
+                <View style={styles.header}>
+                    <View style={styles.headerT}>
                         <Text style={styles.inline}>Monday</Text>
                         <Text style={styles.subline}>30/11/2020</Text>
                         <Text style={styles.subline}>22:00-6:00</Text>
                     </View>
+                    <MapView style={styles.map} initialRegion={initialLocation}
+                    >
+                        {
+                            <MapView.Marker coordinate={{
+                                latitude: -20.136302,
+                                longitude: 57.500937,
+                                latitudeDelta: 0.0922,
+                                longitudeDelta: 0.0421,
+                            }} />
+                        }
 
-                    <View style={styles.supportview}>
-                        <Text style={styles.support}>Action</Text>
-                    </View>
-                    <Animatable.View animation="fadeInLeft" duration={1500} style={[styles.rectangleone, styles.shadow]}>
-                        <Support
-                            image={require('../assets/exercise.png')}
-                            title="Daily Exercise"
-                            subtitle="Difficulty on insensible"
-                        />
-                    </Animatable.View>
-                    <Animatable.View animation="fadeInRight" duration={1500} style={[styles.rectangleone, { top: 580 }]}>
-                        <Support
-                            image={require('../assets/apple.png')}
-                            title="Balanced Diet"
-                            subtitle="Occasional Preference fast"
-                        />
-                    </Animatable.View>
-                    <Animatable.View animation="fadeInLeft" duration={1500} style={[styles.rectangleone, { top: 690 }]}>
-                        <Support
-                            image={require('../assets/cricket.png')}
-                            title="Sports and Yoga"
-                            subtitle="Services securing health ..."
-                        />
-                    </Animatable.View>
-                </ScrollView>
-            </View>
-        );
-    }
+                    </MapView>
+                </View>
+
+
+                <View style={styles.supportview}>
+                    <Text style={styles.support}>Action</Text>
+                </View>
+                <Animatable.View animation="fadeInLeft" duration={1500} style={[styles.rectangleone, styles.shadow]}>
+                    <Support
+                        image={require('../assets/exercise.png')}
+                        title="Daily Exercise"
+                        subtitle="Difficulty on insensible"
+                    />
+                </Animatable.View>
+                <Animatable.View animation="fadeInRight" duration={1500} style={[styles.rectangleone, { top: 580 }]}>
+                    <Support
+                        image={require('../assets/apple.png')}
+                        title="Balanced Diet"
+                        subtitle="Occasional Preference fast"
+                    />
+                </Animatable.View>
+                <Animatable.View animation="fadeInLeft" duration={1500} style={[styles.rectangleone, { top: 690 }]}>
+                    <Support
+                        image={require('../assets/cricket.png')}
+                        title="Sports and Yoga"
+                        subtitle="Services securing health ..."
+                    />
+                </Animatable.View>
+            </ScrollView>
+        </View>
+    );
+
 }
+export default Mission;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -60,7 +85,12 @@ const styles = StyleSheet.create({
         flex: 1,
         left: 25,
         top: 20,
+
+    },
+    headerT: {
+
         flexDirection: 'row'
+
     },
     inline: {
         fontSize: 28,
@@ -101,5 +131,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         top: 470,
         borderRadius: 18
-    }
+    }, map: {
+
+        width: Dimensions.get('window').width / 1.15,
+        height: Dimensions.get('window').height / 2.5,
+    },
 })

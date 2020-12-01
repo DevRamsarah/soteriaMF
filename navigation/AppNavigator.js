@@ -11,9 +11,10 @@ import ProfileScreen from '../screens/ProfileScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import clients from '../screens/clients';
-import NewsDetailsScreen from '../screens/NewsDetailsScreen';
+import AboutScreen from '../screens/AboutScreen';
 import FavouritesScreen from '../screens/FavouritesScreen';
 import Mission from '../screens/mission';
+import employee from '../screens/employee';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -51,8 +52,10 @@ const AppNavigator = () => {
               <Entypo name="add-user" color={color} size={size} />
             ),
           }}
-          name={'employee'}
-          component={SignupScreen}
+          // name={'employee'}
+          // component={SignupScreen}
+          name={'employeees'}
+          component={employee}
         />
         <Tabs.Screen
           options={{
@@ -60,8 +63,10 @@ const AppNavigator = () => {
               <MaterialIcons name="add-circle" color={color} size={size} />
             ),
           }}
-          name={'client'}
-          component={clients}
+          name={'About'}
+          component={AboutScreen}
+        // name={'client'}
+        // component={clients}
         />
         <Tabs.Screen
           options={{
@@ -82,8 +87,11 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name={'Login'} component={LoginScreen} />
-        <Stack.Screen name={'menu'} component={TabsNavigator} />
         <Stack.Screen name={'Home'} component={Home} />
+        <Stack.Screen name={'menu'} component={TabsNavigator} />
+        <Stack.Screen name={'About'} component={AboutScreen} />
+        <Stack.Screen name={'Employees'} component={employee} />
+        <Stack.Screen name={'client'} component={clients} />
         <Stack.Screen name={'calendar'} component={FavouritesScreen} />
         <Stack.Screen name={'Profile'} component={ProfileScreen} />
         <Stack.Screen name={'Signup'} component={SignupScreen} />

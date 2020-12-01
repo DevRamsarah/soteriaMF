@@ -142,7 +142,6 @@ const client = (props) => {
                             setM({ lat, lng })
                         }}>
                         {
-                            m &&
                             <MapView.Marker coordinate={{
                                 latitude: m.lat,
                                 longitude: m.lng,
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 30,
-        backgroundColor: '#ffa611',
+        backgroundColor: 'black',
         width: 200,
         alignItems: 'center',
         paddingVertical: 10,

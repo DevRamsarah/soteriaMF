@@ -46,30 +46,6 @@ const AppNavigator = () => {
         <Tabs.Screen
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Entypo name="add-user" color={color} size={size} />
-            ),
-
-
-          }}
-          // name={'employee'}
-          // component={SignupScreen}
-          name={'employeees'}
-          component={employee}
-        />
-        <Tabs.Screen
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="add-circle" color={color} size={size} />
-            ),
-          }}
-          name={'Clients'}
-          component={AboutScreen}
-        // name={'client'}
-        // component={clients}
-        />
-        <Tabs.Screen
-          options={{
-            tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="face-profile" color={color} size={size} />
             ),
           }}
